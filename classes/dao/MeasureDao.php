@@ -6,16 +6,15 @@
  * Time: 16:51
  */
 
-
 class MeasureDao extends DaoBdd
 {
 
-    public function ___construct($config)
+    public function __construct($config)
     {
         parent::__construct($config);
     }
 
-    /*public function findAllContact() {
+   /* public function findAllContact() {
 
         $result = [];
 
@@ -39,11 +38,11 @@ class MeasureDao extends DaoBdd
     }*/
 
     public function findMeasureById($id)
-{
+       {
 
-        $result;
+        $result = [];
 
-        $query = $this->bdd->prepare("SELECT datetime, temperature, humidite FROM relevees where id = :id");
+        $query = $this->bdd->prepare("SELECT datetime, temperature, humidite FROM relevees where id = :id ");
 
         $query->bindParam(":id", $id);
 
@@ -92,7 +91,7 @@ class MeasureDao extends DaoBdd
 
         $query->execute();
     }
-    public function updateContact($measure,$id) {
+    public function updateMeasure($measure,$id) {
 
 
 
