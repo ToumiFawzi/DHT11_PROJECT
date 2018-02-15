@@ -1,10 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fawzi
- * Date: 06/02/18
- * Time: 16:51
- */
+
+namespace dao;
+
+use domain\Measure;
 
 class MeasureDao extends DaoBdd
 {

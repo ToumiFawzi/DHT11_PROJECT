@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fawzi
- * Date: 07/02/18
- * Time: 11:38
- */
+
+namespace domain;
 
 class Measure
 {
