@@ -33,22 +33,83 @@ class TestMeasureDao extends TestCase
             
          parent::tearDown();
         }
-        public function testcreateMeasure()
+        
+        
+        public function testfindMeasureById()
         {
-            $measure = new Measure(new DateTime("2017-12-21"), $temperature, $humidite);
+            $measure = $this->measureDao->findMeasureById(4);
+            $this->assertEquals("2018-01-14 01:22:37", $measure->datetime); //fonctionne
+            $this->assertEquals(50, $measure->temperature);
+            $this->assertEquals(30, $measure->humidite);
+        }
+        
+        public function testfindAllMeasure()
+        {
+            $measures = $this->measureDao->findAllMeasure();
+            $this->assertEquals(3, count($measures));
             
-          /*  $id = $this->MeasureDao->createMeasure($measure);
+            $this->assertEquals("2018-01-14 01:22:37", $measures[0]->datetime);
+            $this->assertEquals(50, $measures[0]->temperature);
+            $this->assertEquals(30, $measures[0]->humidite);
             
-            $newMeasure = $this->MeasureDao->findMeasureById($id);*/
+            $this->assertEquals("2018-02-15 03:00:00", $measures[1]->datetime); //fonctionne
+            $this->assertEquals(58, $measures[1]->temperature);
+            $this->assertEquals(62, $measures[1]->humidite);
             
-            $this->assertEquals(2017, $newMeasure->dateTime->format("Y"));
+            $this->assertEquals("2018-02-14 11:00:00", $measures[2]->datetime);
+            $this->assertEquals(21, $measures[2]->temperature);
+            $this->assertEquals(50, $measures[2]->humidite);
+        }
+        
+       public function testdeleteMeasure()
+        {
+            $measure = new Measure("2017-12-21 10:10:11", 42, 53);
+            $id = $this->measureDao->createMeasure($measure);
             
-           // $this->assertEquals(10, $newMeasure->dateTime->format("H"));
+            $newMeasure = $this->measureDao->findMeasureById($id);
+            
+            $this->assertNotNull($newMeasure);
+            $this->measureDao->deleteMeasure($id);
+            
+           $deletedMeasure = $this->measureDao->findMeasureById($id);
+            $this->assertNull($deletedMeasure);
+        }
+        
+      public function testcreateMeasure()
+        {
+            $measure = new Measure("2017-12-21 10:10:11",30,20);
+            
+            $id =$this->measureDao->createMeasure($measure);
+            
+            $newMeasure = $this ->measureDao->findMeasureById($id);
+             
+            $this->assertEquals("2017-12-21 10:10:11", $newMeasure->datetime); //fonctionne
             
             $this->assertEquals(30, $newMeasure->temperature);
             
             $this->assertEquals(20, $newMeasure->humidite);
             
-           // $this->MeasureDao->deleteMeasure($id);
-        }      
+            $this->measureDao->deleteMeasure($id);
+            
+        }  
+       public function testupdateMeasure()
+        {
+            $measure = new Measure('1879-03-14 00:00:00', 23, 23);
+            $id = $this->measureDao->createMeasure($measure);
+            
+            $newMeasure = $this->measureDao->findMeasureById(20);
+            $newMeasure->datetime = '1879-03-14 10:00:00';
+            $newMeasure->temperature = 28;
+            $newMeasure->humidite = 28;
+            
+            $this->measureDao->updateMeasure($newMeasure, 20);       //fonctionne
+            $updatedMeasure = $this->measureDao->findMeasureById(20);
+            
+            $this->assertEquals('1879-03-14 10:00:00', $updatedMeasure->datetime);
+            $this->assertEquals(28, $updatedMeasure->temperature);
+            $this->assertEquals(28, $updatedMeasure->humidite);
+            
+            $this->measureDao->deleteMeasure($id);
+        }
+        
 }

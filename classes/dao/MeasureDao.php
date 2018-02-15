@@ -12,33 +12,32 @@ class MeasureDao extends DaoBdd
         parent::__construct($config);
     }
 
-   /* public function findAllContact() {
+    public function findAllMeasure() {
 
         $result = [];
 
-        $reponse = $this->bdd->query("SELECT id, nom, prenom, tel, mail, utilisateur_id FROM contacts order by id");
+        $reponse = $this->bdd->query("SELECT id, datetime, temperature, humidite FROM relevees order by id");
 
         while ($donnees = $reponse->fetch()) {
 
             $id = $donnees["id"];
-            $nom = $donnees["nom"];
-            $prenom = $donnees["prenom"];
-            $tel = $donnees["tel"];
-            $mail = $donnees["mail"];
-            $utilisateur_id = $donnees["utilisateur_id"];
+            $datetime = $donnees["datetime"];
+            $temperature= $donnees["temperature"];
+            $humidite = $donnees["humidite"];
+            
 
-            $contact = new Contact($id, $nom, $prenom, $tel, $mail, $utilisateur_id);
+            $measure = new Measure($datetime, $temperature, $humidite);
 
-            $result[] = $contact;
+            $result[] = $measure;
         }
 
         return $result;
-    }*/
+    }
 
     public function findMeasureById($id)
        {
 
-        $result = [];
+        $result = null;
 
         $query = $this->bdd->prepare("SELECT datetime, temperature, humidite FROM relevees where id = :id ");
 

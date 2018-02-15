@@ -12,4 +12,9 @@ class DaoBdd
             $config['db.username'],
             $config['db.password']);
     }
+    
+    public function close() {
+        
+        $this->bdd = null;
+    }
 }
