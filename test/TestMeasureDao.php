@@ -35,7 +35,7 @@ class TestMeasureDao extends TestCase
         }
         
         
-        public function testfindMeasureById()
+       public function testfindMeasureById()
         {
             $measure = $this->measureDao->findMeasureById(4);
             $this->assertEquals("2018-01-14 01:22:37", $measure->datetime); //fonctionne
@@ -66,7 +66,7 @@ class TestMeasureDao extends TestCase
             $measure = new Measure("2017-12-21 10:10:11", 42, 53);
             $id = $this->measureDao->createMeasure($measure);
             
-            $newMeasure = $this->measureDao->findMeasureById($id);
+            $newMeasure = $this->measureDao->findMeasureById($id);    //fonctionne
             
             $this->assertNotNull($newMeasure);
             $this->measureDao->deleteMeasure($id);
@@ -97,13 +97,13 @@ class TestMeasureDao extends TestCase
             $measure = new Measure('1879-03-14 00:00:00', 23, 23);
             $id = $this->measureDao->createMeasure($measure);
             
-            $newMeasure = $this->measureDao->findMeasureById(20);
+            $newMeasure = $this->measureDao->findMeasureById($id);
             $newMeasure->datetime = '1879-03-14 10:00:00';
             $newMeasure->temperature = 28;
             $newMeasure->humidite = 28;
             
-            $this->measureDao->updateMeasure($newMeasure, 20);       //fonctionne
-            $updatedMeasure = $this->measureDao->findMeasureById(20);
+            $this->measureDao->updateMeasure($newMeasure, $id);       //fonctionne
+            $updatedMeasure = $this->measureDao->findMeasureById($id);
             
             $this->assertEquals('1879-03-14 10:00:00', $updatedMeasure->datetime);
             $this->assertEquals(28, $updatedMeasure->temperature);
